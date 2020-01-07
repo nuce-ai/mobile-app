@@ -40,8 +40,9 @@ const reducers = handleActions({
             isFailure : true,
             payload   : action.payload
         })
-    }
-},
-    defaultState
+    },
+    
+ },
+ defaultState
 )
 export default reducers;

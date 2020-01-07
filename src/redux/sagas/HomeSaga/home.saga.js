@@ -4,9 +4,9 @@ import Axios from 'axios';
 
 function* homeRequest(param){
     try {
-        put({"type" : "HOME/HOME_REQUEST_SUCCESS",payload : "HOME/HOME_REQUEST_SUCCESS IS ACTIVATE"});
+        yield put({"type" : "HOME/HOME_REQUEST_SUCCESS",payload : "HOME/HOME_REQUEST_SUCCESS IS ACTIVATE"});
     } catch (error) {
-        put({"type" : "HOME/HOME_REQUEST_FAILURE",payload : error});
+        yield put({"type" : "HOME/HOME_REQUEST_FAILURE",payload : error});
     }
   
 }
