@@ -30,7 +30,9 @@ class HomeContainer extends Component {
                 <ButtonComponent
                     content = "Click me"
                     event = {() => this.handleClickMe()}
+
                 />
+                
             </View>
         )
     }
@@ -45,5 +47,6 @@ const mapDispatchToProps = dispatch => {
         homeAction : bindActionCreators(homeReducer.actions.home,dispatch)
     }
 }
-const connectHomeContainer = connect(null,mapDispatchToProps)(HomeContainer);
+
+const connectHomeContainer = connect(mapStateToProps,mapDispatchToProps)(HomeContainer);
 export default connectHomeContainer
