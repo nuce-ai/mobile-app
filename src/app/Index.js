@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import {Text,StyleSheet,View} from 'react-native';
-import HomeContainer from '../containers/HomeContainer/HomeContainer'
+import HomeScreen from '../screens/HomeScreen/HomeScreen';
+import WalkthroughtScreen from '../screens/WalkthroughtScreen/WalkthroughtScreen';
+import Demo from '../screens/WalkthroughtScreen/demo'
 export default class Index extends Component {
     render() {
         return (
             <View style={styles.container}>
-               <HomeContainer/>
+               <WalkthroughtScreen/>
+            
             </View>
         )
     }
@@ -13,8 +16,6 @@ export default class Index extends Component {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
+      backgroundColor: '#F9FBFC',
     },
   });

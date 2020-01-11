@@ -5,7 +5,7 @@ import * as homeReducer from '../../redux/reducers/HomeReducer/home.reducer'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-class HomeContainer extends Component {
+class HomeScreen extends Component {
     constructor(props){
         super(props);
        this.state = {
@@ -48,5 +48,5 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-const connectHomeContainer = connect(mapStateToProps,mapDispatchToProps)(HomeContainer);
-export default connectHomeContainer
+const connectHomeScreen = connect(mapStateToProps,mapDispatchToProps)(HomeScreen);
+export default connectHomeScreen

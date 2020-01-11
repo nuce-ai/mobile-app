@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { StyleSheet, TouchableOpacity,Text } from 'react-native';
-import { LinearGradient } from 'expo';
-
 
 
 export default class Button extends Component {
