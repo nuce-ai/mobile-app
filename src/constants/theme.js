@@ -8,7 +8,6 @@ const colors = {
     gray: "#9DA3B4",
     gray2: "#C5CCD6",
   };
-  
   const sizes = {
     // global sizes
     base: 16,
