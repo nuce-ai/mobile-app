@@ -139,12 +139,10 @@ export default class WalkthroughtScreen extends Component {
               
                 {this.renderDots()}
               
-                <Block  flex={0.1} center middle margin={6}>
-                 
+                <Block  flex={false} center top margin={6}>
                         <ButtonComponent
                             content={"Let's go"}
                         />
-                   
                 </Block>
                
             </Block>
