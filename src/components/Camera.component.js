@@ -4,7 +4,10 @@ import * as MediaLibrary from 'expo-media-library'
 import {Camera} from 'expo-camera';
 
 import * as Permissions from 'expo-permissions';
-export default class CameraExamples extends Component {
+import * as cameraReducer from '../redux/reducers/CameraReducer/camera.reducer'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+class CameraExamples extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -82,10 +85,16 @@ export default class CameraExamples extends Component {
       this.setState({ rollGranted: false });
     }
   }
-  createAssetAsync = async () => {
+  handleSaveImage  = async () => {
     // TODO:
   }
+  handleObjectDetected = () => {
+    // TODO:
+  }
+
+
   takePictureAndCreateAlbum = async () => {
+    this.props.cameraAction.processRequest()
     console.log('tpaca');
     const { uri } = await this.camera.takePictureAsync();
     console.log('uri', uri);
@@ -154,3 +163,16 @@ const styles = StyleSheet.create({
 
 
 });
+
+const mapStateToProps = (state) =>{
+  return ({
+    camera : state.camera
+  })
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    cameraAction : bindActionCreators(cameraReducer.actions.camera,dispatch)
+  }
+}
+const connectCameraScreen = connect(mapStateToProps,mapDispatchToProps)(CameraExamples);
+export default connectCameraScreen
