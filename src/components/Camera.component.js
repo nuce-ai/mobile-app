@@ -1,124 +1,108 @@
-import React from 'react';
-import { Text, View, TouchableOpacity ,Image,ImageBackground} from 'react-native';
+import React, { Component } from 'react';
+import { Text, View, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import * as MediaLibrary from 'expo-media-library'
+import {Camera} from 'expo-camera';
+
 import * as Permissions from 'expo-permissions';
-import image from '../constants/image'
-import { Camera } from 'expo-camera';
-import { Block} from '../components';
-// import SVG from 'react-native-svg-uri'
-// import Ellipse from '../assets/images/screen-home/Ellipse.png'
-import * as FileSystem  from 'expo-file-system'
-export default class CameraExample extends React.Component {
-  
-   state = {
-      hasCameraPermission: null,
-      type: Camera.Constants.Type.back,
-      flashMode : Camera.Constants.FlashMode.off,
-      photo : '',
-    };
+export default class CameraExamples extends Component {
+  state = {
+    rollGranted: false,
+    cameraGranted: false,
+  };
 
-    camera = React.createRef() 
-
-
-  onPictureSaved  = async filePath => {
-    console.log(filePath)
-    FileSystem.makeDirectoryAsync('file:///Users/hoando/project/mobile-app/images/')
-    // console.log(FileSystem.documentDirectory)
-    FileSystem.moveAsync({
-      from: filePath.uri,
-      to: 'file:///Users/hoando/project/mobile-app/images/'
-    })
-    
+  componentDidMount() {
+    this.getCameraPermissions();
   }
-  
-  async componentDidMount() {
+
+  async getCameraPermissions() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
-    this.setState({ hasCameraPermission: status === 'granted' });
-  }
-  snap = async () => {
-    if(this.camera){
-      const options = {
-        quality: 1,
-        base64 : false,
-        onPictureSaved : this.onPictureSaved
-       }
-      let photo = await this.camera.takePictureAsync(options)
-  
-  }
-}
-  render() {
-
-   console.log("line 40",this.state.photo)
-    const { hasCameraPermission } = this.state;
-    if (hasCameraPermission === null) {
-      return <View />;
-    } else if (hasCameraPermission === false) {
-      return <Text>No access to camera</Text>;
+    if (status === 'granted') {
+      this.setState({ cameraGranted: true });
     } else {
-      return (
-        <Block style={{ flex: 1 }}>
-          <Camera style={{ flex: 1 }} 
-            type={this.state.type}
-            flashMode = {this.state.flashMode}
-            ref = {ref => {
-              this.camera = ref
-            }}
-          >
-            <Block safe flex
-              marginTop = {50}
-              marginRight = {25}
-            >
-              <TouchableOpacity
-                style={{
-                  flex: 0.1,
-                  alignSelf: 'flex-end',
-                  alignItems: 'center',
-                }}
-                onPress={() => {
-                  this.setState({
-                    type:
-                      this.state.type === Camera.Constants.Type.back
-                        ? Camera.Constants.Type.front
-                        : Camera.Constants.Type.back,
-                  });
-                }}>
-                <Image
-                style={{
-                  width : 25,
-                  height : 25,
-                }} 
-                source={image.icon.flip}/>
-              </TouchableOpacity>
-            </Block>
-            <Block safe bottom center>
-                <ImageBackground 
-                  style={{
-                    flexWrap : 'wrap',
-                    width : 80,
-                    height : 80,
-              
-                  }}
-                  source={require('../assets/images/screen-home/Ellipse.png')}
-                >
-                  <Block center middle>           
-                    <TouchableOpacity
-                      onPress={this.snap}
-                    >
-                        <Image
-                        style={{               
-                          width : 60,
-                          height : 60,               
-                        }}
-                        source={require('../assets/images/screen-home/EllipseCircle3.png')}
-                        />
-                    </TouchableOpacity>
-                  </Block>
-              </ImageBackground>
-                
-                
-            </Block>
-          </Camera>
-        </Block>
-      );
+      this.setState({ cameraGranted: false });
+      console.log('Uh oh! The user has not granted us permission.');
+    }
+    this.getCameraRollPermissions();
+  }
+
+  async getCameraRollPermissions() {
+   
+    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    if (status === 'granted') {
+      this.setState({ rollGranted: true });
+    } else {
+      console.log('Uh oh! The user has not granted us permission.');
+      this.setState({ rollGranted: false });
     }
   }
+
+  takePictureAndCreateAlbum = async () => {
+    console.log('tpaca');
+    const { uri } = await this.camera.takePictureAsync();
+    console.log('uri', uri);
+    const asset = await MediaLibrary.createAssetAsync(uri);
+    console.log('asset', asset);
+    MediaLibrary.createAlbumAsync('Expo', asset)
+      .then(() => {
+        Alert.alert('Album created!')
+      })
+      .catch(error => {
+        Alert.alert('An Error Occurred!')
+      });
+  };
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Camera
+          type={Camera.Constants.Type.back}
+          style={{ flex: 1 }}
+          ref={ref => {
+            this.camera = ref;
+          }}
+        />
+        <TouchableOpacity
+          onPress={() =>
+            this.state.rollGranted && this.state.cameraGranted
+              ? this.takePictureAndCreateAlbum()
+              : Alert.alert('Permissions not granted')
+          }
+          style={styles.buttonContainer}>
+          <View style={styles.button}>
+            <Text style={styles.buttonText}>
+              Snap
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+  }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'black',
+  },
+  buttonContainer: {
+    position: 'absolute',
+    bottom: 30,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+  },
+  button: {
+    width: 200,
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 4,
+    paddingVertical: 4,
+    borderWidth: 1.5,
+    borderColor: '#fff',
+  },
+  buttonText: {
+    fontSize: 24,
+    color: '#fff',
+  },
+});
