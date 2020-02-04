@@ -17,7 +17,6 @@ class CameraExamples extends Component {
     };
   }
   
-
   componentDidMount() {
     this.getCameraPermissions();
   }
@@ -94,11 +93,12 @@ class CameraExamples extends Component {
 
 
   takePictureAndCreateAlbum = async () => {
-    this.props.cameraAction.processRequest()
+   
     console.log('tpaca');
     const { uri } = await this.camera.takePictureAsync();
     console.log('uri', uri);
     this.setState({ path : uri})
+    this.props.cameraAction.processRequest(uri)
     const asset = await MediaLibrary.createAssetAsync(uri);
     console.log('asset', asset);
     MediaLibrary.createAlbumAsync('Expo', asset)
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
   cancel: {
     position: 'absolute',
     right: 20,
-    top: 20,
+    top: 50,
     backgroundColor: 'transparent',
     color: '#fff',
     fontWeight: '600',
@@ -163,6 +163,7 @@ const styles = StyleSheet.create({
 
 
 });
+
 
 const mapStateToProps = (state) =>{
   return ({
