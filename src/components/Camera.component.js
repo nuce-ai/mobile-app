@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Alert, Image, Dimensions } from 'react-native';
 import * as MediaLibrary from 'expo-media-library'
 import {Camera} from 'expo-camera';
 
 import * as Permissions from 'expo-permissions';
 export default class CameraExamples extends Component {
-  state = {
-    rollGranted: false,
-    cameraGranted: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      rollGranted: false,
+      cameraGranted: false,
+      path : null,
+    };
+  }
+  
 
   componentDidMount() {
     this.getCameraPermissions();
@@ -24,34 +29,7 @@ export default class CameraExamples extends Component {
     }
     this.getCameraRollPermissions();
   }
-
-  async getCameraRollPermissions() {
-   
-    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    if (status === 'granted') {
-      this.setState({ rollGranted: true });
-    } else {
-      console.log('Uh oh! The user has not granted us permission.');
-      this.setState({ rollGranted: false });
-    }
-  }
-
-  takePictureAndCreateAlbum = async () => {
-    console.log('tpaca');
-    const { uri } = await this.camera.takePictureAsync();
-    console.log('uri', uri);
-    const asset = await MediaLibrary.createAssetAsync(uri);
-    console.log('asset', asset);
-    MediaLibrary.createAlbumAsync('Expo', asset)
-      .then(() => {
-        Alert.alert('Album created!')
-      })
-      .catch(error => {
-        Alert.alert('An Error Occurred!')
-      });
-  };
-
-  render() {
+  renderCamera = () => {
     return (
       <View style={styles.container}>
         <Camera
@@ -75,6 +53,61 @@ export default class CameraExamples extends Component {
           </View>
         </TouchableOpacity>
       </View>
+    );
+  }
+  renderImage() {
+    console.log("line 59",this.state.path)
+    return (
+      <View>
+        <Image
+          source={{uri : this.state.path}}
+          style={styles.preview}
+        />
+        <Text
+          style={styles.cancel}
+          onPress={() => this.setState({ path: null })}
+        >Cancel
+        </Text>
+      </View>
+    );
+  }
+
+  async getCameraRollPermissions() {
+   
+    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    if (status === 'granted') {
+      this.setState({ rollGranted: true });
+    } else {
+      console.log('Uh oh! The user has not granted us permission.');
+      this.setState({ rollGranted: false });
+    }
+  }
+  createAssetAsync = async () => {
+    // TODO:
+  }
+  takePictureAndCreateAlbum = async () => {
+    console.log('tpaca');
+    const { uri } = await this.camera.takePictureAsync();
+    console.log('uri', uri);
+    this.setState({ path : uri})
+    const asset = await MediaLibrary.createAssetAsync(uri);
+    console.log('asset', asset);
+    MediaLibrary.createAlbumAsync('Expo', asset)
+      .then((result) => {
+        console.log(result)
+      })
+      .catch(error => {
+        Alert.alert('An Error Occurred!')
+      });
+  };
+
+  render() {
+    console.log("path ",this.state.path)
+    return (
+      <React.Fragment>
+        {this.state.path ? this.renderImage() : this.renderCamera()}
+      </React.Fragment>
+        
     );
   }
 }
@@ -105,4 +138,19 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: '#fff',
   },
+  preview: {
+    width : "100%",
+    height: "100%",
+  },
+  cancel: {
+    position: 'absolute',
+    right: 20,
+    top: 20,
+    backgroundColor: 'transparent',
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 17,
+  }
+
+
 });
