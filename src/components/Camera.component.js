@@ -32,6 +32,9 @@ class CameraExamples extends Component {
     }
     this.getCameraRollPermissions();
   }
+  handleCameraFlip = () => {
+    // TODO: 
+  }
   renderCamera = () => {
     return (
       <Block>
@@ -47,8 +50,14 @@ class CameraExamples extends Component {
           }}
         >
          
-         <Block safe top left>
-          <Image source={Picture.icon.flip} style={{width: 30,height: 30}}/>
+         <Block safe >
+           <TouchableOpacity
+           style={{alignItems: 'flex-end',marginRight: 30}}
+           onPress = {this.handleCameraFlip}
+           >
+            <Image source={Picture.icon.flip} style={{width: 30,height: 30}}/>
+           </TouchableOpacity>
+          
          </Block>
         <Block bottom style={{position: 'absolute',bottom : 0,width: "100%",marginBottom : 20}} center>
           <ImageBackground 
