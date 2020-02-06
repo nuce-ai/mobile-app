@@ -5,6 +5,8 @@ const walkthrought = {
 }
 const icon = {
     flip : require('../assets/images/screen-home/1x/refresh-2.png'),
+    eclipse : require('../assets/images/screen-home/Ellipse.png'),
+    eclipseCircle : require('../assets/images/screen-home/EllipseCircle.png')
 }
 const root = {
     walkthrought,

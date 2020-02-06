@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Alert, Image, Dimensions } from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Alert, Image, Dimensions ,ImageBackground} from 'react-native';
 import * as MediaLibrary from 'expo-media-library'
 import {Camera} from 'expo-camera';
-
+import {Block,Button,Card,Input,Text} from '../components/index'
 import * as Permissions from 'expo-permissions';
 import * as cameraReducer from '../redux/reducers/CameraReducer/camera.reducer'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Picture from '../constants/image'
 class CameraExamples extends Component {
   constructor(props) {
     super(props);
@@ -33,28 +34,44 @@ class CameraExamples extends Component {
   }
   renderCamera = () => {
     return (
-      <View style={styles.container}>
+      <Block>
+          
+        
+      
+       
         <Camera
           type={Camera.Constants.Type.back}
-          style={{ flex: 1 }}
+          style={{flex:1,justifyContent: 'space-between' }}
           ref={ref => {
             this.camera = ref;
           }}
-        />
-        <TouchableOpacity
-          onPress={() =>
-            this.state.rollGranted && this.state.cameraGranted
-              ? this.takePictureAndCreateAlbum()
-              : Alert.alert('Permissions not granted')
-          }
-          style={styles.buttonContainer}>
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>
-              Snap
-            </Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+        >
+         
+         <Block safe top left>
+          <Image source={Picture.icon.flip} style={{width: 30,height: 30}}/>
+         </Block>
+        <Block bottom style={{position: 'absolute',bottom : 0,width: "100%",marginBottom : 20}} center>
+          <ImageBackground 
+            source={Picture.icon.eclipse} 
+            style={{width : 80,height : 80}}>
+            <Block middle center margin>
+              <TouchableOpacity
+              onPress={() =>
+                this.state.rollGranted && this.state.cameraGranted
+                  ? this.takePictureAndCreateAlbum()
+                  : Alert.alert('Permissions not granted')
+              }
+              >
+                <Image source={Picture.icon.eclipseCircle} style={{height:60,width:60}}/>
+              </TouchableOpacity>
+            </Block>
+            
+          </ImageBackground>
+          {/*  */}
+        </Block>
+        
+        </Camera>
+      </Block>
     );
   }
   renderImage() {
@@ -111,7 +128,6 @@ class CameraExamples extends Component {
   };
 
   render() {
-    console.log("path ",this.state.path)
     return (
       <React.Fragment>
         {this.state.path ? this.renderImage() : this.renderCamera()}
@@ -134,11 +150,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    width: 200,
+    
     backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 4,
+    borderRadius: 50,
     paddingVertical: 4,
     borderWidth: 1.5,
     borderColor: '#fff',
@@ -146,6 +162,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 24,
     color: '#fff',
+
   },
   preview: {
     width : "100%",
