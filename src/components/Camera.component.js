@@ -15,6 +15,9 @@ class CameraExamples extends Component {
       rollGranted: false,
       cameraGranted: false,
       path : null,
+      type : true,
+      flash : false,
+      // path : 'file:///Users/hoando/Library/Developer/CoreSimulator/Devices/45C583E8-5C73-40D8-9E4A-460A22CE912C/data/Containers/Data/Application/243D3B46-DBCA-4FAC-ACA1-F2191A248EC8/Library/Caches/ExponentExperienceData/%2540anonymous%252FMobileApp-5ec18f9d-4589-41a0-8a0b-b0bed965a2c0/Camera/FF837BCB-6390-4EC0-8F0A-44BC8C2ED10F.jpg'
     };
   }
   
@@ -33,31 +36,46 @@ class CameraExamples extends Component {
     this.getCameraRollPermissions();
   }
   handleCameraFlip = () => {
-    // TODO: 
+    this.setState({
+      type : !this.state.type
+    })
+  }
+  handleCameraFlash = () => {
+    this.setState({ 
+      flash : !this.state.flash
+    })
   }
   renderCamera = () => {
     return (
       <Block>
-          
-        
-      
-       
         <Camera
-          type={Camera.Constants.Type.back}
+          type={this.state.type ? Camera.Constants.Type.back : Camera.Constants.Type.front}
+          flashMode={this.state.flash ? Camera.Constants.FlashMode.on : Camera.Constants.FlashMode.off}
+          whiteBalance = {Camera.Constants.WhiteBalance.auto}
+
           style={{flex:1,justifyContent: 'space-between' }}
           ref={ref => {
             this.camera = ref;
           }}
-        >
-         
-         <Block safe >
-           <TouchableOpacity
-           style={{alignItems: 'flex-end',marginRight: 30}}
-           onPress = {this.handleCameraFlip}
-           >
-            <Image source={Picture.icon.flip} style={{width: 30,height: 30}}/>
-           </TouchableOpacity>
-          
+        >   
+         <Block safe row flex={false}>
+           <Block column>
+            <TouchableOpacity
+              style = {{alignItems : 'flex-start', marginLeft : 30}}
+              onPress = {this.handleCameraFlash}
+              > 
+              <Image source={Picture.icon.lightning} style={{width: 30,height: 30}}/>
+              </TouchableOpacity>
+           </Block>
+           
+          <Block column>
+            <TouchableOpacity
+            style={{alignItems: 'flex-end',marginRight: 30}}
+            onPress = {this.handleCameraFlip}
+            >
+              <Image source={Picture.icon.flip} style={{width: 30,height: 30}}/>
+            </TouchableOpacity>
+          </Block> 
          </Block>
         <Block bottom style={{position: 'absolute',bottom : 0,width: "100%",marginBottom : 20}} center>
           <ImageBackground 
@@ -84,19 +102,45 @@ class CameraExamples extends Component {
     );
   }
   renderImage() {
-    console.log("line 59",this.state.path)
     return (
-      <View>
-        <Image
+      <Block>
+        <ImageBackground
           source={{uri : this.state.path}}
           style={styles.preview}
         />
-        <Text
-          style={styles.cancel}
-          onPress={() => this.setState({ path: null })}
-        >Cancel
-        </Text>
-      </View>
+        <Block bottom row flex={false}>
+            <Block column center black 
+            style={{padding : 30,borderTopLeftRadius: 35}}
+            >
+              <TouchableOpacity
+               onPress = {this.handleBack}
+              >
+                  <Image
+                    source={Picture.icon.leftArrow}
+                    style={{width : 35,height : 35}}
+                  /> 
+              </TouchableOpacity>               
+                </Block>
+                <Block column center black style={{padding : 30}}>
+                  <TouchableOpacity>
+                    <Image
+                      source={Picture.icon.magicWand}
+                      style={{width : 35,height : 35}}
+                    /> 
+                  </TouchableOpacity>
+                </Block>
+                <Block column center black style={{padding : 30,borderTopRightRadius: 35}}>
+                  <TouchableOpacity
+                    onPress = {this.handleSaveImage}
+                  >
+                    <Image
+                      source={Picture.icon.download}
+                      style={{width : 35,height : 35}}
+                    /> 
+                  </TouchableOpacity>             
+                </Block>
+        </Block>
+      </Block>
     );
   }
 
@@ -112,11 +156,26 @@ class CameraExamples extends Component {
   }
   handleSaveImage  = async () => {
     // TODO:
+    let uri = this.state.path;
+    const asset = await MediaLibrary.createAssetAsync(uri);
+    console.log('asset', asset);
+    MediaLibrary.createAlbumAsync('Expo', asset)
+      .then((result) => {
+        console.log(result)
+        Alert.alert('Save image successfully')
+      })
+      .catch(error => {
+        Alert.alert('An Error Occurred!')
+      });
   }
   handleObjectDetected = () => {
     // TODO:
   }
-
+ handleBack = () => {
+   this.setState({
+    path : null,
+  })
+ }
 
   takePictureAndCreateAlbum = async () => {
    
@@ -125,27 +184,21 @@ class CameraExamples extends Component {
     console.log('uri', uri);
     this.setState({ path : uri})
     this.props.cameraAction.processRequest(uri)
-    const asset = await MediaLibrary.createAssetAsync(uri);
-    console.log('asset', asset);
-    MediaLibrary.createAlbumAsync('Expo', asset)
-      .then((result) => {
-        console.log(result)
-      })
-      .catch(error => {
-        Alert.alert('An Error Occurred!')
-      });
+    
   };
-
   render() {
+    console.log(height);
+    console.log(width);
     return (
       <React.Fragment>
         {this.state.path ? this.renderImage() : this.renderCamera()}
+        {/* {this.renderImage()} */}
       </React.Fragment>
         
     );
   }
 }
-
+const {height,width} = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -174,8 +227,9 @@ const styles = StyleSheet.create({
 
   },
   preview: {
-    width : "100%",
-    height: "100%",
+    flex : 1,
+    width : width,
+    height: height,
   },
   cancel: {
     position: 'absolute',
