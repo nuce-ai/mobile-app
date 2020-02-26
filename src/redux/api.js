@@ -1,6 +1,6 @@
 
 const API = {
-        BASE_URL : "http://192.168.0.109:5000",
+        BASE_URL : "http://192.168.0.104:5000",
 
         CAMERA : {
             METHOD : "POST",

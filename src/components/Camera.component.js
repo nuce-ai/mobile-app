@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View, StyleSheet, TouchableOpacity, Alert, Image, Dimensions ,ImageBackground} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Alert, Image, Dimensions ,ImageBackground,ActivityIndicator} from 'react-native';
 import * as MediaLibrary from 'expo-media-library'
 import {Camera} from 'expo-camera';
 import {Block,Button,Card,Input,Text} from '../components/index'
@@ -7,7 +7,9 @@ import * as Permissions from 'expo-permissions';
 import * as cameraReducer from '../redux/reducers/CameraReducer/camera.reducer'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Picture from '../constants/image'
+import Picture from '../constants/image';
+import Spinner from 'react-native-loading-spinner-overlay';
+import {withRouter} from 'react-router'
 class CameraExamples extends Component {
   constructor(props) {
     super(props);
@@ -102,8 +104,14 @@ class CameraExamples extends Component {
     );
   }
   renderImage() {
+    console.log(this.props.camera.isRequest)
     return (
       <Block>
+        <Spinner
+          visible={this.props.camera.isRequest}
+          textContent={'Loading...'}
+          textStyle={styles.spinnerTextStyle}
+        />
         <ImageBackground
           source={{uri : this.state.path}}
           style={styles.preview}
@@ -122,7 +130,9 @@ class CameraExamples extends Component {
               </TouchableOpacity>               
                 </Block>
                 <Block column center black style={{padding : 30}}>
-                  <TouchableOpacity>
+                  <TouchableOpacity
+                    onPress = {this.handleObjectDetected}
+                  >
                     <Image
                       source={Picture.icon.magicWand}
                       style={{width : 35,height : 35}}
@@ -168,9 +178,14 @@ class CameraExamples extends Component {
         Alert.alert('An Error Occurred!')
       });
   }
+  
   handleObjectDetected = () => {
-    // TODO:
+    this.props.cameraAction.processRequest({path:this.state.path,callback:this.AlertSuccess})
+    // this.props.history.push("/home/after-processing")
   }
+  AlertSuccess = () => {
+    this.props.history.push("/home/after-processing")
+}
  handleBack = () => {
    this.setState({
     path : null,
@@ -183,7 +198,7 @@ class CameraExamples extends Component {
     const { uri } = await this.camera.takePictureAsync();
     console.log('uri', uri);
     this.setState({ path : uri})
-    this.props.cameraAction.processRequest(uri)
+    
     
   };
   render() {
@@ -200,6 +215,9 @@ class CameraExamples extends Component {
 }
 const {height,width} = Dimensions.get('window');
 const styles = StyleSheet.create({
+  spinnerTextStyle: {
+    color: '#FFF'
+  },
   container: {
     flex: 1,
     backgroundColor: 'black',
@@ -256,4 +274,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 const connectCameraScreen = connect(mapStateToProps,mapDispatchToProps)(CameraExamples);
-export default connectCameraScreen
+export default withRouter(connectCameraScreen)

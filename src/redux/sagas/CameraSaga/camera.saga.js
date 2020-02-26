@@ -25,7 +25,7 @@ function getRequested(param){
         },
         data : formData
     }).then(result => {return (result)})
-    .catch(result => {return (result)})
+    .catch(error=> {return (error.response)})
     
     
     
@@ -40,9 +40,10 @@ function getRequested(param){
 function* processRequest(param){
     try {
         console.log("line 20",param.payload)
-        const result = yield call(getRequested,param.payload)
-        console.log("line 38 ",result)
-        yield put({"type" : "CAMERA/PROCESS_REQUEST_SUCCEEDED",payload : "CAMERA/PROCESS_REQUEST_SUCCEEDED"});
+        const result = yield call(getRequested,param.payload.path)
+        console.log("line 38 ",result.data.payload)
+        yield put({"type" : "CAMERA/PROCESS_REQUEST_SUCCEEDED",payload : result.data.payload});
+        param.payload.callback()
     } catch (error) {
         yield put({"type" : "CAMERA/PROCESS_REQUEST_FAILURE",payload : error});
     }
