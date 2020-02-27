@@ -9,7 +9,6 @@ export default Routers = [
     {
         path : "/walkthrought",
         component :WalkthroughtScreen,
-        layout : "/start"
     },
     {
         path : "/home",

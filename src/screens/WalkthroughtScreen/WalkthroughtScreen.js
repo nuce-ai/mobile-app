@@ -7,7 +7,8 @@ import image from '../../constants/image';
 import {theme} from '../../constants'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
+import {withRouter} from 'react-router';
+import {AsyncStorage} from 'react-native';
 const backgrounds = [
     {
         id : "01",
@@ -29,7 +30,7 @@ const backgrounds = [
     }
 ]
 
-export default class WalkthroughtScreen extends Component {
+class WalkthroughtScreen extends Component {
     scrollX = new Animated.Value(0);
 
     state = {
@@ -95,6 +96,13 @@ export default class WalkthroughtScreen extends Component {
         </React.Fragment>
         );
     }
+    _storeData = async () => {
+        try {
+            await AsyncStorage.setItem('show_walkthrought', '1');
+          } catch (error) {
+            // Error saving data
+          }
+    }
     renderDots() {
         const dotPosition = Animated.divide(this.scrollX, SIZES.width);
     
@@ -128,6 +136,10 @@ export default class WalkthroughtScreen extends Component {
           </Block>
         );
       }
+      handleLetGo = () => {
+        this.props.history.push("/home/camera");
+        this._storeData()
+      }
     render() {
         
         return (
@@ -142,6 +154,7 @@ export default class WalkthroughtScreen extends Component {
                 <Block  flex={false} center top margin={6}>
                         <ButtonComponent
                             content={"Let's go"}
+                            event ={this.handleLetGo}
                         />
                 </Block>
                
@@ -182,3 +195,4 @@ const styles = StyleSheet.create({
     }
 
 })
+export default withRouter(WalkthroughtScreen)
