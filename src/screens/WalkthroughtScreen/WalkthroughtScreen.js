@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
-import {View,Alert,StyleSheet,Text,Image,ScrollView ,Animated} from 'react-native';
+import {View,Alert,StyleSheet,Text,Image,ScrollView ,Animated,AsyncStorage} from 'react-native';
 import {Block} from '../../components';
 import {SIZES} from '../../components/theme';
-import ButtonComponent from '../../components/Button.component'
+import ButtonComponent from '../../components/Button.component';
+
 import image from '../../constants/image';
 import {theme} from '../../constants'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {withRouter} from 'react-router';
-import {AsyncStorage} from 'react-native';
+import {saveFile} from '../../fileSystem/file.system'
+
 const backgrounds = [
     {
         id : "01",
@@ -77,6 +79,8 @@ class WalkthroughtScreen extends Component {
                     </ScrollView>
         )
     }
+
+    
     renderTexts() {
         const { slideIndex } = this.state;
         const background = backgrounds[slideIndex];
@@ -96,13 +100,7 @@ class WalkthroughtScreen extends Component {
         </React.Fragment>
         );
     }
-    _storeData = async () => {
-        try {
-            await AsyncStorage.setItem('show_walkthrought', '1');
-          } catch (error) {
-            // Error saving data
-          }
-    }
+   
     renderDots() {
         const dotPosition = Animated.divide(this.scrollX, SIZES.width);
     
@@ -136,12 +134,21 @@ class WalkthroughtScreen extends Component {
           </Block>
         );
       }
+      _storeData = async () => {
+        try {
+          await AsyncStorage.setItem('@MySuperStore:key', 'I like to save it.');
+        } catch (error) {
+          // Error saving data
+        }
+      };
       handleLetGo = () => {
         this.props.history.push("/home/camera");
+        // saveFile()
         this._storeData()
       }
+      
     render() {
-        
+        // console.log(RNFS.DocumentDirectoryPath)
         return (
             <Block safe>
                 <Block center middle>

@@ -109,8 +109,8 @@ class CameraExamples extends Component {
       <Block>
         <Spinner
           visible={this.props.camera.isRequest}
-          textContent={'Loading...'}
           textStyle={styles.spinnerTextStyle}
+          animation={"slide"}
         />
         <ImageBackground
           source={{uri : this.state.path}}

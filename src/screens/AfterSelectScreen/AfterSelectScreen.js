@@ -18,6 +18,7 @@ class ProcessingScreen extends Component {
    
    render() {
         // console.log("Line 20 : day la man hinh",Object.keys(this.props.camera.data[0])
+        console.log(this.props.camera.data)
         return (
             <Block safe>
                 <Block flex={false}>                 
@@ -29,7 +30,7 @@ class ProcessingScreen extends Component {
                         
                         </TouchableOpacity>
                 </Block>
-                {Object.keys(this.props.camera.data[0]).length !== 0 &&
+                {this.props.camera.data.length !== 0 &&
                 <Block center>
                         <Block flex={false}
                             style={{
