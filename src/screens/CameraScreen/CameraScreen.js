@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import {View, StyleSheet, TouchableOpacity, Alert, Image, Dimensions ,ImageBackground,ActivityIndicator} from 'react-native';
 import * as MediaLibrary from 'expo-media-library'
 import {Camera} from 'expo-camera';
-import {Block,Button,Card,Input,Text} from '../components/index'
+import {Block,Button,Card,Input,Text} from '../../components/index'
 import * as Permissions from 'expo-permissions';
-import * as cameraReducer from '../redux/reducers/CameraReducer/camera.reducer'
+import * as cameraReducer from '../../redux/reducers/CameraReducer/camera.reducer'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Picture from '../constants/image';
+import Picture from '../../constants/image';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {withRouter} from 'react-router'
 class CameraExamples extends Component {

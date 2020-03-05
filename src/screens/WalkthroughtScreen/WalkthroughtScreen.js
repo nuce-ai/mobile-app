@@ -9,7 +9,7 @@ import {theme} from '../../constants'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {withRouter} from 'react-router';
-import {saveFile} from '../../fileSystem/file.system'
+
 
 const backgrounds = [
     {
