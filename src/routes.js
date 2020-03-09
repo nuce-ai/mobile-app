@@ -3,7 +3,7 @@ import WalkthroughtScreen from './screens/WalkthroughtScreen/WalkthroughtScreen'
 import CameraScreen from './screens/CameraScreen/CameraScreen';
 // import ProcessingScreen from './screens/ProcessingScreen/ProcessingScreen';
 import AfterSelectScreen from './screens/AfterSelectScreen/AfterSelectScreen'
-
+import TestSpeak from './screens/AfterSelectScreen/testSpeak'
 
 export default Routers = [
     {
@@ -25,6 +25,11 @@ export default Routers = [
         component :AfterSelectScreen,
         layout : "/home"
     },
+    {
+        path : "/test-speak",
+        component :TestSpeak,
+        layout : "/home"
+    }
 
 
 ]

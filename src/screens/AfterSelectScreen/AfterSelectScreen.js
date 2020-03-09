@@ -15,10 +15,8 @@ import {withRouter} from 'react-router';
 import * as Speech from 'expo-speech';
 class ProcessingScreen extends Component {
     speaker = () => {
-        Speech.speak("what is your name");
-        
+        Speech.speak(this.props.camera.data[0].label);
     }
-   
    render() {
         // console.log("Line 20 : day la man hinh",Object.keys(this.props.camera.data[0])
         console.log(this.props.camera.data)
@@ -65,7 +63,9 @@ class ProcessingScreen extends Component {
                                     <TextComponent bold size={30}>{this.props.camera.data[0].label}</TextComponent>
                                     {/* <TextComponent center>dôg</TextComponent>  */}
                                 </View>  
-                                <TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={this.speaker}
+                                >
                                     <Image
                                         source={Picture.icon.volume}
                                         style={{
