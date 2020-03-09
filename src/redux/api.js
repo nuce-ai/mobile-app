@@ -1,10 +1,10 @@
 
 const API = {
-        BASE_URL : "http://192.168.0.104:5000",
+        BASE_URL : "http://2bb3b421.ngrok.io",
 
         CAMERA : {
             METHOD : "POST",
-            URI    : "api/upload"
+            URI    : "/api/analysis/image"
         }
     
 }

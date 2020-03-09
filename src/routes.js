@@ -1,7 +1,7 @@
 import HomeScreen from './screens/HomeScreen/HomeScreen';
 import WalkthroughtScreen from './screens/WalkthroughtScreen/WalkthroughtScreen';
 import CameraScreen from './screens/CameraScreen/CameraScreen';
-import ProcessingScreen from './screens/ProcessingScreen/ProcessingScreen';
+// import ProcessingScreen from './screens/ProcessingScreen/ProcessingScreen';
 import AfterSelectScreen from './screens/AfterSelectScreen/AfterSelectScreen'
 
 

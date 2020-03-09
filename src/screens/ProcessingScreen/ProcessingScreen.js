@@ -3,7 +3,7 @@ import {View,Alert,StyleSheet,Text,Image,ImageBackground,Dimensions,TouchableOpa
 import {Block} from '../../components';
 import {SIZES} from '../../components/theme';
 import ButtonComponent from '../../components/Button.component'
-import image from '../../constants/image';
+import image from '../../constants/image'
 import {theme} from '../../constants'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';

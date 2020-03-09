@@ -12,9 +12,12 @@ import {Svg,Circle} from 'react-native-svg'
 import Picture from '../../constants/image'
 import MagicDot from '../../components/MagicDot.component'
 import {withRouter} from 'react-router';
-
+import * as Speech from 'expo-speech';
 class ProcessingScreen extends Component {
-
+    speaker = () => {
+        Speech.speak("what is your name");
+        
+    }
    
    render() {
         // console.log("Line 20 : day la man hinh",Object.keys(this.props.camera.data[0])
@@ -67,7 +70,8 @@ class ProcessingScreen extends Component {
                                         source={Picture.icon.volume}
                                         style={{
                                             width:30,height:30
-                                    }}/>  
+                                    }}
+                                    />  
                                 </TouchableOpacity>  
                                                          
                         </Block>
@@ -77,9 +81,9 @@ class ProcessingScreen extends Component {
                   
                 </Block>
    }
-                <Block flex={false} center>                  
+                {/* <Block flex={false} center>                  
                             <Text>Menu Component</Text>
-                </Block>
+                </Block> */}
             </Block>
         )
     }
