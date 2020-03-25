@@ -110,7 +110,7 @@ class CameraExamples extends Component {
         <Spinner
           visible={this.props.camera.isRequest}
           textStyle={styles.spinnerTextStyle}
-          animation={"slide"}
+          animation={"none"}
         />
         <ImageBackground
           source={{uri : this.state.path}}

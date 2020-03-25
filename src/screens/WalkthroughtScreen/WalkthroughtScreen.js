@@ -3,7 +3,7 @@ import {View,Alert,StyleSheet,Text,Image,ScrollView ,Animated,AsyncStorage} from
 import {Block} from '../../components';
 import {SIZES} from '../../components/theme';
 import ButtonComponent from '../../components/Button.component';
-
+import LoadingOverlay from '../../components/LoadingOverlay';
 import image from '../../constants/image';
 import {theme} from '../../constants'
 import { bindActionCreators } from 'redux';
@@ -134,13 +134,13 @@ class WalkthroughtScreen extends Component {
           </Block>
         );
       }
-      _storeData = async () => {
-        try {
-          await AsyncStorage.setItem('@MySuperStore:key', 'I like to save it.');
-        } catch (error) {
-          // Error saving data
-        }
-      };
+      // _storeData = async () => {
+      //   try {
+      //     await AsyncStorage.setItem('@MySuperStore:key', 'I like to save it.');
+      //   } catch (error) {
+      //     // Error saving data
+      //   }
+      // };
       handleLetGo = () => {
         this.props.history.push("/home/camera");
         // saveFile()

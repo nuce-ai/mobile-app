@@ -1,6 +1,6 @@
 
 const API = {
-        BASE_URL : "http://2bb3b421.ngrok.io",
+        BASE_URL : "https://alook-server.herokuapp.com",
 
         CAMERA : {
             METHOD : "POST",
