@@ -13,21 +13,21 @@ export default class Index extends Component {
     
     render() {
         return (
-            // <NativeRouter>
-            //     <Switch>
-            //         <Route path='/home' render={props => <Home {...props}/>}/>
-            //         <Route path="/walkthrought" render={props => <WalkthroughtScreen {...props}/>}/>
-            //         {/* <Redirect from="/" to="home/camera"/> */}
-            //         <Redirect from="/" to="/walkthrought"/>
-            //     </Switch>
-            // </NativeRouter>
+            <NativeRouter>
+                <Switch>
+                    <Route path='/home' render={props => <Home {...props}/>}/>
+                    <Route path="/walkthrought" render={props => <WalkthroughtScreen {...props}/>}/>
+                    {/* <Redirect from="/" to="home/camera"/> */}
+                    <Redirect from="/" to="/walkthrought"/>
+                </Switch>
+            </NativeRouter>
 
             // <TestSpeak/>
 
-            <View style={styles.container}>
-             <LoadingOverlay/>
+            // <View style={styles.container}>
+            //  <LoadingOverlay/>
                 
-            </View>
+            // </View>
         )
     }
 }

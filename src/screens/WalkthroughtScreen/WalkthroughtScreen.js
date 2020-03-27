@@ -144,7 +144,7 @@ class WalkthroughtScreen extends Component {
       handleLetGo = () => {
         this.props.history.push("/home/camera");
         // saveFile()
-        this._storeData()
+        // this._storeData()
       }
       
     render() {

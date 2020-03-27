@@ -9,7 +9,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Picture from '../../constants/image';
 import Spinner from 'react-native-loading-spinner-overlay';
-import {withRouter} from 'react-router'
+import {withRouter} from 'react-router';
+import LoadingOverlay from '../../components/LoadingOverlay';
+import { LinearGradient } from 'expo-linear-gradient';
+
+import LottieView from 'lottie-react-native'
 class CameraExamples extends Component {
   constructor(props) {
     super(props);
@@ -60,7 +64,8 @@ class CameraExamples extends Component {
             this.camera = ref;
           }}
         >   
-         <Block safe row flex={false}>
+         <Block safe row flex={false}
+         >
            <Block column>
             <TouchableOpacity
               style = {{alignItems : 'flex-start', marginLeft : 30}}
@@ -106,50 +111,90 @@ class CameraExamples extends Component {
   renderImage() {
     console.log(this.props.camera.isRequest)
     return (
-      <Block>
-        <Spinner
+      <Block center>
+        {/* <Spinner
           visible={this.props.camera.isRequest}
           textStyle={styles.spinnerTextStyle}
           animation={"none"}
-        />
+        /> */}
+        {/* <LoadingOverlay/> */}
+        
         <ImageBackground
           source={{uri : this.state.path}}
           style={styles.preview}
         />
-        <Block bottom row flex={false}>
-            <Block column center black 
-            style={{padding : 30,borderTopLeftRadius: 35}}
+        {this.props.camera.isRequest &&<LottieView
+            source={require('../../assets/lottiefiles/loading-screen.json')}
+            autoPlay         
+            resizeMode="center"
+            // style={{width:350}}
+        />}  
+        {!this.props.camera.isRequest && <Block bottom  middle center row flex={false} style={{width : width - 30,marginBottom:10}}>
+        
+            <Block column center 
+            style={{paddingTop:10,paddingBottom:10}}
             >
+                {/* <TouchableOpacity
+                onPress = {this.handleBack}
+                >
+                    <Image
+                      source={Picture.icon.leftArrow}
+                      style={{width : 30,height : 30}}
+                    /> 
+                </TouchableOpacity>      */}
+          
+                    <TouchableOpacity
+                  onPress = {this.handleBack}
+                  >
+                      <Image
+                        source={Picture.icon.leftArrow}
+                        style={{width : 30,height : 30,
+                          shadowColor: "#000",
+                          shadowOffset: {
+                            width: 0,
+                            height: 4,
+                          },
+                          shadowOpacity: 0.32,
+                          shadowRadius: 5.46,
+                          
+                          elevation: 9,}}
+                      /> 
+                  </TouchableOpacity>     
+               
+            </Block>
+            <Block column center style={{paddingTop:10,paddingBottom:10}}>
+            <LinearGradient
+                    colors={['#ff00cc', '#333399']}
+                    style={{ padding: 15, alignItems: 'center', borderRadius: 30 }}>
               <TouchableOpacity
-               onPress = {this.handleBack}
+                onPress = {this.handleObjectDetected}
               >
-                  <Image
-                    source={Picture.icon.leftArrow}
-                    style={{width : 35,height : 35}}
-                  /> 
-              </TouchableOpacity>               
-                </Block>
-                <Block column center black style={{padding : 30}}>
-                  <TouchableOpacity
-                    onPress = {this.handleObjectDetected}
-                  >
-                    <Image
-                      source={Picture.icon.magicWand}
-                      style={{width : 35,height : 35}}
-                    /> 
-                  </TouchableOpacity>
-                </Block>
-                <Block column center black style={{padding : 30,borderTopRightRadius: 35}}>
-                  <TouchableOpacity
-                    onPress = {this.handleSaveImage}
-                  >
-                    <Image
-                      source={Picture.icon.download}
-                      style={{width : 35,height : 35}}
-                    /> 
-                  </TouchableOpacity>             
-                </Block>
-        </Block>
+                <Image
+                  source={Picture.icon.magicWand}
+                  style={{width : 30,height : 30}}
+                /> 
+              </TouchableOpacity>
+              </LinearGradient>
+            </Block>
+            <Block column center style={{paddingTop:10,paddingBottom:10}}>
+              <TouchableOpacity
+                onPress = {this.handleSaveImage}
+              >
+                <Image
+                  source={Picture.icon.download}
+                  style={{width : 30,height : 30,shadowColor: "#000",
+                  shadowOffset: {
+                    width: 0,
+                    height: 4,
+                  },
+                  shadowOpacity: 0.32,
+                  shadowRadius: 5.46,
+                  
+                  elevation: 9,}}
+                /> 
+              </TouchableOpacity>             
+            </Block>
+        </Block>}
       </Block>
     );
   }
@@ -248,6 +293,8 @@ const styles = StyleSheet.create({
     flex : 1,
     width : width,
     height: height,
+    
+    
   },
   cancel: {
     position: 'absolute',

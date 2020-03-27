@@ -8,11 +8,7 @@ export default class LoadingOverlay extends Component {
 
     render() {
         return (
-            <Block>
-                <ImageBackground
-                source={picture.picture.object_recongition}
-                style={{width: '100%', height: '100%'}}
-                >
+            <View>          
                     <LottieView
                         source={require('../assets/lottiefiles/trail-loading.json')}
                         autoPlay
@@ -20,9 +16,8 @@ export default class LoadingOverlay extends Component {
                         resizeMode="center"
                         // style={{width:350}}
                     />   
-                </ImageBackground>
-                   
-            </Block>
+      
+            </View>
         )
     }
 }
