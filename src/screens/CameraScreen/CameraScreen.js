@@ -149,15 +149,7 @@ class CameraExamples extends Component {
                       <Image
                         source={Picture.icon.leftArrow}
                         style={{width : 30,height : 30,
-                          shadowColor: "#000",
-                          shadowOffset: {
-                            width: 0,
-                            height: 4,
-                          },
-                          shadowOpacity: 0.32,
-                          shadowRadius: 5.46,
-                          
-                          elevation: 9,}}
+                          }}
                       /> 
                   </TouchableOpacity>     
                
@@ -182,15 +174,7 @@ class CameraExamples extends Component {
               >
                 <Image
                   source={Picture.icon.download}
-                  style={{width : 30,height : 30,shadowColor: "#000",
-                  shadowOffset: {
-                    width: 0,
-                    height: 4,
-                  },
-                  shadowOpacity: 0.32,
-                  shadowRadius: 5.46,
-                  
-                  elevation: 9,}}
+                  style={{width : 30,height : 30,}}
                 /> 
               </TouchableOpacity>             
             </Block>
@@ -229,7 +213,7 @@ class CameraExamples extends Component {
     // this.props.history.push("/home/after-processing")
   }
   AlertSuccess = () => {
-    this.props.history.push("/home/after-processing")
+    this.props.history.push("/home/list-object")
 }
  handleBack = () => {
    this.setState({

@@ -19,6 +19,7 @@ export default class Index extends Component {
                     <Route path="/walkthrought" render={props => <WalkthroughtScreen {...props}/>}/>
                     {/* <Redirect from="/" to="home/camera"/> */}
                     <Redirect from="/" to="/walkthrought"/>
+                    {/* <Redirect from="/" to="/home/list-object"/> */}
                 </Switch>
             </NativeRouter>
 

@@ -12,7 +12,8 @@ const icon = {
     magicWand: require('../assets/images/icon/magic-wand.png'),
     download: require('../assets/images/icon/download.png'),
     back: require('../assets/images/icon/back.png'),
-    volume: require('../assets/images/icon/volume.png')
+    volume: require('../assets/images/icon/volume.png'),
+    unknown : require('../assets/images/icon/question.png')
 }
 const picture = {
     object_recongition: require('../assets/images/pexels-photo-3299901.png'),
