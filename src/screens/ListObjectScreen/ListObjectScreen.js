@@ -28,14 +28,24 @@ class ListObjectScreen extends Component {
         console.log(this.props.camera.data)
         return (
             <Block safe>
-                <Block flex={false}>                 
+                <Block flex={false} marginBottom = {10}>           
+                   
                         <TouchableOpacity
-                            style = {{alignItems : 'flex-start', marginLeft : 10,marginBottom:10}}
-                            onPress={()=>{this.props.history.push("/home/camera")}}
-                            > 
-                            <Image source={Picture.icon.back} style={{width: 30,height: 30}}/>
-                
+                                style = {{alignItems : 'flex-start', marginLeft : 10,marginBottom:10}}
+                                onPress={()=>{this.props.history.push("/home/camera")}}
+                                > 
+                                <Image source={Picture.icon.back} style={{width: 30,height: 30}}/>
+
                         </TouchableOpacity>
+                         
+                        <TextComponent
+                           size = {20}
+                           bold
+                           center
+                        style={{marginTop : 2}}
+                        >
+                            DANH SÁCH ĐỐI TƯỢNG 
+                        </TextComponent>
                 </Block>
                 {this.props.camera.data.length === 0 &&
                 <Block flex={true} center>      
@@ -82,6 +92,8 @@ class ListObjectScreen extends Component {
                 </SafeAreaView>
 
                 }
+
+
                 {/* <SafeAreaView >
                 <ScrollView>
                 <Block center>

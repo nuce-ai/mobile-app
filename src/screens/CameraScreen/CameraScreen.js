@@ -126,7 +126,7 @@ class CameraExamples extends Component {
         {this.props.camera.isRequest &&<LottieView
             source={require('../../assets/lottiefiles/loading-screen.json')}
             autoPlay         
-            resizeMode="center"
+            
             // style={{width:350}}
         />}  
         {!this.props.camera.isRequest && <Block bottom  middle center row flex={false} style={{width : width - 30,marginBottom:10}}>
