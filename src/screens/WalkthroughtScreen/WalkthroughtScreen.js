@@ -158,7 +158,7 @@ class WalkthroughtScreen extends Component {
               
                 {this.renderDots()}
               
-                <Block  flex={false} center top margin={6}>
+                <Block  flex={false} center top marginBottom={20}>
                         <ButtonComponent
                             content={"Let's go"}
                             event ={this.handleLetGo}

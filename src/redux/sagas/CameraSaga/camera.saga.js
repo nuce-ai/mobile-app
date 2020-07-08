@@ -3,12 +3,19 @@ import API from '../../api'
 import Axios from 'axios';
 import FormData from 'form-data';
 
+function getFilename(filename){
+    const req = /([\w|\s|-])*\.(?:jpg|gif|png)/g;
+
+    return req.exec(filename)[0]
+    
+}
 function getRequested(param){
     let formData = new FormData();
-    // console.log("line 8",param)
+    console.log("line 8",param)
     formData.append('file',{
         uri : param.replace('file://',''),
-        name : "what.jpg",
+        
+        name : getFilename(param),
         type : 'image/jpeg'
 
     });
