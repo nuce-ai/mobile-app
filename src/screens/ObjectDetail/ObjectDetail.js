@@ -26,6 +26,9 @@ class ObjectDetail extends Component {
     speaker = (text) => {
         Speech.speak(text);
     }
+    convertString = (text) => {
+        return text.replace("_"," ");
+    }
    render() {
        console.log(this.props)
         let id = this.getId(this.props.location.search)
@@ -72,11 +75,11 @@ class ObjectDetail extends Component {
                         </Block>
                         <Block row flex={false} center middle style={{marginBottom:20}}>     
                                 <View style={{marginRight:10}} center middle>
-                                    <TextComponent bold size={30}>{Data[id].label}</TextComponent>
+                                    <TextComponent bold size={30}>{this.convertString(Data[id].label)}</TextComponent>
                                     {/* <TextComponent center>ˈpätid plant</TextComponent>  */}
                                 </View>  
                                 <TouchableOpacity
-                                    onPress={() => this.speaker(Data[id].label)}
+                                    onPress={() => this.speaker(this.convertString(Data[id].label))}
                                 >
                                     <Image
                                         source={Picture.icon.volume}
@@ -95,7 +98,7 @@ class ObjectDetail extends Component {
                             <Text   
                              
                                 
-                                >Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                                >{this.props.camera.image_info.object_content}
                             </Text>
                         </View>                
                             
@@ -111,7 +114,7 @@ class ObjectDetail extends Component {
 const {height,width} = Dimensions.get('window');
 const mapStateToProps = (state) =>{
     return ({
-      camera : state.camera
+      camera : state.camera,
     })
   }
   const connectObjectDetail = connect(mapStateToProps)(ObjectDetail);

@@ -15,20 +15,20 @@ const backgrounds = [
     {
         id : "01",
         img : image.walkthrought.picture01,
-        title : "What is Lorem Ipsum?",
-        description : "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        title : "Ứng dụng nhận diện đối tượng !",
+        description : "Là một ứng dụng ứng dụng trí tuệ nhân tạo trong việc hỗ trợ học tiếng anh. ",
     },
     {
         id : "02",
         img : image.walkthrought.picture02,
-        title : "Why do we use it?",
-        description : "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+        title : "NuceTeam",
+        description : "Đỗ Hoàn, Nguyễn Thị Thanh Thư, Bùi Phương Mỹ, Trịnh Thị Oanh, Lê Hoàng Long",
     },
     {
         id : "03",
         img : image.walkthrought.picture03,
-        title : "Where does it come from?",
-        description : "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. ",
+        title : "Giáo viên hưỡng dẫn",
+        description : "Bùi Thanh Phong, Lê Đức Quang.",
     }
 ]
 

@@ -10,18 +10,21 @@ import {theme} from '../../constants'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {Svg,Circle} from 'react-native-svg'
+import * as cameraReducer from '../../redux/reducers/CameraReducer/camera.reducer'
 import Picture from '../../constants/image'
 import MagicDot from '../../components/MagicDot.component'
 import {withRouter} from 'react-router';
+import { bindActionCreators } from 'redux';
 import * as Speech from 'expo-speech';
 import Data from '../../constants/data'
 class ListObjectScreen extends Component {
     speaker = () => {
         Speech.speak(this.props.camera.data[0].label);
     }
-    handleGetDetail = (id) => {
+    handleGetDetail = (id,label) => {
         // console.log(e);
         this.props.history.push(`/home/object-detail?id=${id}`)
+        this.props.getDataRequested({"object_name":label});
     }
    render() {
         // console.log("Line 20 : day la man hinh",Object.keys(this.props.camera.data[0])
@@ -69,7 +72,7 @@ class ListObjectScreen extends Component {
                    
                     return(
                     <TouchableOpacity key={index}
-                    onPress={() => this.handleGetDetail(index)}
+                    onPress={() => this.handleGetDetail(index,value.label)}
                     >
 
                    
@@ -137,5 +140,8 @@ const mapStateToProps = (state) =>{
       camera : state.camera
     })
   }
-  const connectListObjectScreen = connect(mapStateToProps)(ListObjectScreen);
+const mapDispatchToProps = (dispatch) => {
+    return ({...bindActionCreators(CameraReducer.actions.imageInformation,dispatch)})
+}
+  const connectListObjectScreen = connect(mapStateToProps,mapDispatchToProps)(ListObjectScreen);
 export default withRouter(connectListObjectScreen)

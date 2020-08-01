@@ -2,6 +2,7 @@ import {takeEvery,put,call} from 'redux-saga/effects';
 import API from '../../api'
 import Axios from 'axios';
 import FormData from 'form-data';
+import data from '../../../constants/data';
 
 function getFilename(filename){
     const req = /([\w|\s|-])*\.(?:jpg|gif|png)/g;
@@ -20,7 +21,7 @@ function getRequested(param){
 
     });
     // formData.append({'value' : param.replace('file://','')})
-   
+
     console.log("line 12",formData);
     return Axios({
         method : API.CAMERA.METHOD,
@@ -33,16 +34,18 @@ function getRequested(param){
         data : formData
     }).then(result => {return (result)})
     .catch(error=> {return (error.response)})
-    
-    
-    
-    
-    // return Axios.post(`${API.BASE_URL}/api/upload`,formData,{
-    //     headers: {
-    //         Accept: 'application/json',
-    //         'Content-Type': 'multipart/form-data',
-    //     }
-    // })
+}
+function getInfo(param) {
+    return Axios({
+        method : API.INFO.METHOD,
+        url : API.INFO.URI,
+        baseURL : API.BASE_URL,
+        headers : {
+            'accept': 'application/json',
+        },
+        data : param
+    }).then(result => {return (result)})
+    .catch(error => {return (error.response)})
 }
 function* processRequest(param){
     try {
@@ -56,6 +59,16 @@ function* processRequest(param){
     }
   
 }
+function *getDataRequested(param){
+    try{
+        const result = yield call(getInfo,param.payload);
+        yield put({"type" : "IMAGE_INFORMATION/GET_DATA_SUCCEEDED",payload:result});
+
+    }catch (error) {
+        yield put ({type: "IMAGE_INFORMATION/GET_DATA_FAILED",payload: error});
+    }
+}
 export default function* cameraSaga(){
     yield takeEvery("CAMERA/PROCESS_REQUEST",processRequest);
+    yield takeEvery("IMAGE_INFORMATION/GET_DATA_REQUESTED",getDataRequested);
 }
