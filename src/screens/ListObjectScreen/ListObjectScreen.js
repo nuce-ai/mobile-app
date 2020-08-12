@@ -141,7 +141,7 @@ const mapStateToProps = (state) =>{
     })
   }
 const mapDispatchToProps = (dispatch) => {
-    return ({...bindActionCreators(CameraReducer.actions.imageInformation,dispatch)})
+    return ({...bindActionCreators(cameraReducer.actions.imageInformation,dispatch)})
 }
   const connectListObjectScreen = connect(mapStateToProps,mapDispatchToProps)(ListObjectScreen);
 export default withRouter(connectListObjectScreen)
